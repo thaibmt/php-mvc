@@ -24,7 +24,7 @@ class CommentModel extends Database
     public function getCommentsPerPage($page, $pageSize)
     {
         $offset = ($page - 1) * $pageSize;
-        $sql = "SELECT * FROM comments LIMIT :offset, :pageSize";
+        $sql = "SELECT * FROM comments INNER JOIN student ON comments.student_id = student.id_hv LIMIT :offset, :pageSize";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
@@ -41,12 +41,12 @@ class CommentModel extends Database
         return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     }
 
-    public function addComment($data)
+    public function createComment($data)
     {
         try {
             $sql = "INSERT INTO comments (student_id, content, created_at, updated_at) VALUES (?, ?, ?, ?)";
             $stmt = $this->pdo->prepare($sql);
-            return $stmt->execute($data);
+            return $stmt->execute(array_values($data));
         } catch (PDOException $e) {
             return false;
         }
@@ -55,7 +55,7 @@ class CommentModel extends Database
     public function deleteComment($id)
     {
         try {
-            $sql = "DELETE comments where id=$id";
+            $sql = "DELETE FROM comments where id=$id";
             $stmt = $this->pdo->query($sql);
             return $stmt->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {

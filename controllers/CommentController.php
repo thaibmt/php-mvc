@@ -39,8 +39,8 @@ class CommentController
                 'created_at' => $now,
                 'updated_at' => $now
             ];
-            $this->commentModel->createComment($data);
-        } catch (PDOException $e) {
+            $result = $this->commentModel->createComment($data);
+        } catch (Exception $e) {
             die($e);
         }
     }
@@ -49,6 +49,8 @@ class CommentController
     {
         try {
             $this->commentModel->deleteComment($id);
+            // Trở về trang danh sách
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         } catch (PDOException $e) {
             die($e);
         }

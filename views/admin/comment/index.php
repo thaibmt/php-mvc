@@ -6,14 +6,17 @@ ob_start();
 <!-- Hiển thị danh sách hóa đơn và các liên kết điều hướng -->
 <table border="1" class="table">
     <tr>
-        <th>ID</th>
-        <th>Total</th>
+        <th>STT</th>
+        <th>Mã HV</th>
+        <th>Tên HV</th>
+        <th>Nội dung</th>
+        <th>Action</th>
     </tr>
     <?php foreach ($comments as $index => $comment) : ?>
         <tr>
             <td><?php echo $index + 1; ?></td>
-            <td><?php echo $comment['student_id']; ?></td>
-            <td><?php echo $comment['student_name']; ?></td>
+            <td><?php echo $comment['id_hv']; ?></td>
+            <td><?php echo $comment['name']; ?></td>
             <td><?php echo $comment['content']; ?></td>
             <td>
                 <a href="index.php?action=deleteComment&id=<?php echo $comment['id']; ?>" class="btn btn-danger">Xóa</a>
