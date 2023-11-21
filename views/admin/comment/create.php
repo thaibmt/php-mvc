@@ -1,5 +1,4 @@
 <?php
-session_start();
 $title = "Tạo phản hồi";
 ob_start();
 ?>

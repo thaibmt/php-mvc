@@ -1,5 +1,10 @@
 <?php
-session_start();
+// Kiểm tra xem người dùng đã đăng nhập hay chưa
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index.php?action=login");
+    exit();
+}
+
 $title = "Danh sách phản hồi";
 ob_start();
 ?>
@@ -13,22 +18,23 @@ ob_start();
         <th>Action</th>
     </tr>
     <?php foreach ($comments as $index => $comment) : ?>
-        <tr>
-            <td><?php echo $index + 1; ?></td>
-            <td><?php echo $comment['id_hv']; ?></td>
-            <td><?php echo $comment['name']; ?></td>
-            <td><?php echo $comment['content']; ?></td>
-            <td>
-                <a href="index.php?action=deleteComment&id=<?php echo $comment['id']; ?>" class="btn btn-danger">Xóa</a>
-            </td>
-        </tr>
+    <tr>
+        <td><?php echo $index + 1; ?></td>
+        <td><?php echo $comment['id_hv']; ?></td>
+        <td><?php echo $comment['name']; ?></td>
+        <td><?php echo $comment['content']; ?></td>
+        <td>
+            <a href="index.php?action=deleteComment&id=<?php echo $comment['id']; ?>" class="btn btn-danger">Xóa</a>
+        </td>
+    </tr>
     <?php endforeach; ?>
 </table>
 <div>
     <nav aria-label="Page navigation example">
         <ul class="pagination">
             <?php for ($i = 1; $i <= $totalPages; $i++) : ?>
-                <li class="page-item <?php echo $_GET['page'] == $i ? 'active' : '' ?>"><a class="page-link" href="index.php?action=listComment&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+            <li class="page-item <?php echo $_GET['page'] == $i ? 'active' : '' ?>"><a class="page-link"
+                    href="index.php?action=listComment&page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
             <?php endfor; ?>
         </ul>
     </nav>

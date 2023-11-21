@@ -55,9 +55,9 @@ class CommentModel extends Database
     public function deleteComment($id)
     {
         try {
-            $sql = "DELETE FROM comments where id=$id";
-            $stmt = $this->pdo->query($sql);
-            return $stmt->fetch(PDO::FETCH_ASSOC);
+            $sql = "DELETE FROM comments WHERE id = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$id]);
         } catch (PDOException $e) {
             return false;
         }

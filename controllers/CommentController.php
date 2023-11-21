@@ -8,7 +8,7 @@ class CommentController
         $this->commentModel = $commentModel;
     }
 
-    public function index($page = 1, $pageSize = 1)
+    public function index($page = 1, $pageSize = 10)
     {
         try {
             $totalComments = $this->commentModel->getTotalCommentCount();
