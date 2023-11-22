@@ -5,16 +5,17 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 // Yêu cầu vai trò học viên
-if (in_array($_SESSION['role'], ['QL', 'GV'])) {
+if (!in_array($_SESSION['role'], ['HV', 'GV'])) {
     echo 'Chỉ học viên và giáo viên mới đăng đánh giá';
     exit();
 }
 $title = "Đăng đánh giá";
 ob_start();
 ?>
-<?php if (isset($message)) { ?>
-<h2 class="text-success"><?php echo $message ?></h2>
-<?php } ?>
+<?php if (isset($_SESSION['message'])) { ?>
+<h2 class="text-success"><?php echo $_SESSION['message'] ?></h2>
+<?php unset($_SESSION['message']);
+} ?>
 <form method="post" action="index.php?action=createComment">
     <div class="form-group">
         <label>Nội dung đánh giá</label>

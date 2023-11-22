@@ -20,7 +20,10 @@ class ReplyModel extends Database
     public function getReplyByCommentId($commentId)
     {
         try {
-            $sql = "SELECT * FROM reply WHERE comment_id = ?  ORDER BY id DESC";
+            $sql = "SELECT reply.*, manager.name FROM reply
+            LEFT JOIN manager ON reply.id_ql = manager.id_ql
+            WHERE reply.comment_id = ?
+            ORDER BY reply.id DESC";
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute([$commentId]);
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -66,7 +69,6 @@ class ReplyModel extends Database
         try {
             $sql = "INSERT INTO reply (comment_id, content, id_ql, created_at, updated_at) VALUES (?, ?, ?, ?,?)";
             $stmt = $this->pdo->prepare($sql);
-            // die(var_dump($data));
             return $stmt->execute(array_values($data));
         } catch (PDOException $e) {
             die($e);

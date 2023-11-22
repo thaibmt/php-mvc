@@ -29,6 +29,17 @@ class PaymentModel extends Database
         }
     }
 
+    public function deletePaymentByBillId($idBill)
+    {
+        try {
+            $sql = "DELETE FROM payments WHERE id_bill = ?";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute([$idBill]);
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+
     public function create($data)
     {
         try {
@@ -36,7 +47,6 @@ class PaymentModel extends Database
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute(array_values($data));
         } catch (PDOException $e) {
-            die($e);
             return false;
         }
     }

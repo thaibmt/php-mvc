@@ -47,6 +47,9 @@ switch ($action) {
     case 'updateBill':
         $billController->update($id);
         break;
+    case 'approvedBill':
+        $billController->approvedBill($id);
+        break;
     case 'deleteBill':
         $billController->delete($id);
         break;

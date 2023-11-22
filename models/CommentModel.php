@@ -15,7 +15,10 @@ class CommentModel extends Database
 
     public function getCommentDetails($commentId)
     {
-        $sql = "SELECT * FROM comments WHERE id = ?";
+        $sql = "SELECT comments.*, student.name as studentName, lecturer.name as lecturerName FROM comments 
+        LEFT JOIN student ON comments.id_hv = student.id_hv 
+        LEFT JOIN lecturer ON comments.id_gv = lecturer.id_gv 
+        WHERE comments.id = ?";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$commentId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -28,7 +31,7 @@ class CommentModel extends Database
             $sql = "SELECT comments.*, student.name as studentName FROM comments 
             INNER JOIN student ON comments.id_hv = student.id_hv 
             WHERE comments.id_hv = :userID ORDER BY comments.id DESC
-            LIMIT :offset, :pageSize  ";
+            LIMIT :offset, :pageSize ";
         } else if ($role == 'GV') {
             $sql = "SELECT comments.*, lecturer.name as lecturerName FROM comments 
             INNER JOIN lecturer ON comments.id_gv = lecturer.id_gv 
@@ -72,10 +75,11 @@ class CommentModel extends Database
     public function createComment($data)
     {
         try {
-            $sql = "INSERT INTO comments (id_hv, id_gv, role,content, created_at, updated_at) VALUES (?, ?, ?, ?)";
+            $sql = "INSERT INTO comments (id_hv, id_gv, role,content, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
             $stmt = $this->pdo->prepare($sql);
             return $stmt->execute(array_values($data));
         } catch (PDOException $e) {
+            die($e);
             return false;
         }
     }

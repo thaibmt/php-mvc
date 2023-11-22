@@ -26,7 +26,9 @@ class CommentController
             // Load view với dữ liệu hóa đơn và thông tin phân trang
             include('views/admin/comment/index.php');
         } catch (Exception $e) {
-            die($e);
+            $_SESSION['message'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+            // Trở về
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }
 
@@ -46,11 +48,13 @@ class CommentController
                 'updated_at' => $now
             ];
             $result = $this->commentModel->createComment($data);
-            $message = $result ? 'Đã đăng phản hồi thành công.' : 'Có lỗi xảy ra khi đăng phản hồi!';
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            $_SESSION['message'] = $result ? 'Đã đăng phản hồi thành công.' : 'Có lỗi xảy ra khi đăng phản hồi!';
+            // Trở về trang danh sách
+            header('Location: index.php?action=listComment');
         } catch (Exception $e) {
-            echo 'Có lỗi xảy ra khi đăng phản hồi!';
-            die($e);
+            $_SESSION['message'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+            // Trở về
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }
 
@@ -72,11 +76,12 @@ class CommentController
             } else {
                 $_SESSION['message'] = 'Không có quyền xóa đánh giá.';
             }
-
             // Trở về trang danh sách
-            header('Location: ' . $_SERVER['HTTP_REFERER']);
+            header('Location: index.php?action=listComment');
         } catch (PDOException $e) {
-            die($e);
+            $_SESSION['message'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+            // Trở về
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }
 
@@ -98,7 +103,9 @@ class CommentController
             // Trở về
             header('Location: ' . $_SERVER['HTTP_REFERER']);
         } catch (PDOException $e) {
-            die($e);
+            $_SESSION['message'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+            // Trở về
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }
 
@@ -109,7 +116,6 @@ class CommentController
                 $comment = $this->commentModel->getCommentDetails($id);
                 // danh sách phản hồi
                 $replies = $this->replyModel->getReplyByCommentId($id);
-
                 return include('views/admin/comment/detail.php');
             }
             $now = date("Y-m-d H:i:s");
@@ -123,7 +129,9 @@ class CommentController
             $result = $this->replyModel->create($data);
             header('Location: ' . $_SERVER['HTTP_REFERER']);
         } catch (PDOException $e) {
-            die($e);
+            $_SESSION['message'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+            // Trở về
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }
 }

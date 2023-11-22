@@ -58,7 +58,17 @@ ob_start();
         <select name="paid" class="form-select select" required>
             <option <?php echo $bill['paid'] == 0 ? 'selected' : '' ?> value="0">Chưa thanh toán</option>
             <option <?php echo $bill['paid'] == 1 ? 'selected' : '' ?> value="1">Đã thanh toán</option>
+            <option <?php echo $bill['paid'] == 2 ? 'selected' : '' ?> value="2">Chờ duyệt thanh toán</option>
         </select>
+    </div>
+    <div class="form-group">
+        <?php if (isset($bill['content'])) { ?>
+        <label>Nội dung thanh toán:</label>
+        <br>
+        <strong>
+            <?php echo $bill['content'] ?>
+        </strong>
+        <?php } ?>
     </div>
     <button type="submit" class="btn btn-success">Lưu</button>
 </form>

@@ -12,7 +12,21 @@ if (!in_array($_SESSION['role'], ['QL', 'HV'])) {
 
 $title = "Danh sách đơn hàng";
 ob_start();
+$textColor = [
+    'danger',
+    'primary',
+    'warning'
+];
+$billStatus = [
+    'Chưa thanh toán',
+    'Đã thanh toán',
+    'Chờ duyệt thanh toán',
+];
 ?>
+<?php if (isset($_SESSION['message'])) { ?>
+<h2 class="text-success"><?php echo $_SESSION['message'] ?></h2>
+<?php unset($_SESSION['message']);
+} ?>
 <!-- Hiển thị danh sách hóa đơn và các liên kết điều hướng -->
 <table border="1" class="table">
     <tr>
@@ -36,13 +50,24 @@ ob_start();
         <td><?php echo $bill['class_name']; ?></td>
         <td><?php echo $bill['total']; ?></td>
         <td><?php echo $bill['date_bill']; ?></td>
-        <td><?php echo $bill['paid'] ? 'Đã thanh toán' : 'Chưa thanh toán'; ?></td>
+        <td><span class="text-<?php echo $textColor[$bill['paid']] ?>">
+                <?php echo $billStatus[$bill['paid']]; ?>
+                <?php if (isset($bill['content'])) { ?>
+                <i class="fa fa-info-circle" aria-hidden="true" data-toggle="tooltip" data-placement="top"
+                    title="Nội dung thanh toán: <?php echo $bill['content'] ?>"></i>
+                <?php } ?>
+            </span>
+        </td>
         <td class="text-center">
             <?php if ($_SESSION['role'] == 'QL') { ?>
             <a class="btn btn-warning" href="index.php?action=updateBill&id=<?php echo $bill['id_bill']; ?>">Sửa</a>
             <a class="btn btn-danger" href="index.php?action=deleteBill&id=<?php echo $bill['id_bill']; ?>">Xóa</a>
+            <?php if ($bill['paid'] == 2) { ?>
+            <a class="btn btn-success" href="index.php?action=approvedBill&id=<?php echo $bill['id_bill']; ?>">Thanh
+                toán</a>
             <?php } ?>
-            <?php if ($_SESSION['role'] == 'HV') { ?>
+            <?php } ?>
+            <?php if ($_SESSION['role'] == 'HV' && $bill['paid'] == 0) { ?>
             <a class="btn btn-success" href="index.php?action=createPayment&id=<?php echo $bill['id_bill']; ?>">Thanh
                 toán</a>
             <?php } ?>

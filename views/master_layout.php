@@ -19,7 +19,7 @@
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-        <a class="navbar-brand" href="index.html">Start Bootstrap</a>
+        <a class="navbar-brand" href="index.html">QL Khóa Học</a>
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
             data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -48,11 +48,21 @@
                 </li>
                 <?php } ?>
                 <?php if (in_array($_SESSION['role'], ['GV', 'HV'])) { ?>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Đánh giá">
-                    <a class="nav-link" href="index.php?action=listComment">
-                        <i class="fa fa-fw fa-dashboard"></i>
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
+                        data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-wrench"></i>
                         <span class="nav-link-text">Đánh giá</span>
                     </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponents">
+                        <li>
+                            <a href="index.php?action=listComment">Danh sách</a>
+                        </li>
+                        <li>
+                            <a href="index.php?action=createComment">Thêm mới</a>
+                        </li>
+                    </ul>
                 </li>
                 <?php } ?>
                 <?php if (in_array($_SESSION['role'], ['HV'])) { ?>
@@ -63,21 +73,7 @@
                     </a>
                 </li>
                 <?php } ?>
-                <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
-                        data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-wrench"></i>
-                        <span class="nav-link-text">Phản hồi</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseComponents">
-                        <li>
-                            <a href="index.php?action=listComment">Danh sách</a>
-                        </li>
-                        <li>
-                            <a href="index.php?action=createBill">Thêm mới</a>
-                        </li>
-                    </ul>
-                </li> -->
+
             </ul>
             <ul class="navbar-nav sidenav-toggler">
                 <li class="nav-item">
@@ -248,6 +244,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+    $(function() {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
+    </script>
 </body>
 
 </html>
