@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: mysql
--- Thời gian đã tạo: Th10 21, 2023 lúc 03:46 PM
--- Phiên bản máy phục vụ: 8.1.0
--- Phiên bản PHP: 8.2.10
+-- Thời gian đã tạo: Th10 22, 2023 lúc 09:19 AM
+-- Phiên bản máy phục vụ: 8.0.33
+-- Phiên bản PHP: 8.1.18
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,28 +28,29 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `account` (
-  `username` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `password` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `role` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `id` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `username` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(20) COLLATE utf8mb4_general_ci NOT NULL,
+  `role` varchar(20) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `account`
 --
 
-INSERT INTO `account` (`username`, `password`, `role`) VALUES
-('GV1', '12345', 'GV'),
-('GV2', '12345', 'GV'),
-('GV3', '12345', 'GV'),
-('GV4', '12345', 'GV'),
-('GV5', '12345', 'GV'),
-('HV1000', '12345', 'HV'),
-('HV1001', '12345', 'HV'),
-('HV1002', '12345', 'HV'),
-('HV1003', '12345', 'HV'),
-('HV1004', '12345', 'HV'),
-('QL1', '12345', 'QL'),
-('QL2', '12345', 'QL');
+INSERT INTO `account` (`id`, `username`, `password`, `role`) VALUES
+('01', 'GV1', '12345', 'GV'),
+('02', 'GV2', '12345', 'GV'),
+('03', 'GV3', '12345', 'GV'),
+('04', 'GV4', '12345', 'GV'),
+('05', 'GV5', '12345', 'GV'),
+('1000', 'HV1000', '12345', 'HV'),
+('1001', 'HV1001', '12345', 'HV'),
+('1002', 'HV1002', '12345', 'HV'),
+('1003', 'HV1003', '12345', 'HV'),
+('1004', 'HV1004', '12345', 'HV'),
+('QL_01', 'QL1', '12345', 'QL'),
+('QL_02', 'QL2', '12345', 'QL');
 
 -- --------------------------------------------------------
 
@@ -58,21 +59,23 @@ INSERT INTO `account` (`username`, `password`, `role`) VALUES
 --
 
 CREATE TABLE `bill` (
-  `id_bill` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_bill` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `date_bill` date NOT NULL,
-  `id_hv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_ql` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_class` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `total` double NOT NULL
+  `id_hv` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_ql` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_class` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `total` double NOT NULL,
+  `paid` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `bill`
 --
 
-INSERT INTO `bill` (`id_bill`, `date_bill`, `id_hv`, `id_ql`, `id_class`, `total`) VALUES
-('BILL_01', '2023-11-02', '1000', 'QL_01', 'LOP_01', 2000000),
-('BILL_02', '2023-11-03', '1002', 'QL_02', 'LOP_04', 3000000);
+INSERT INTO `bill` (`id_bill`, `date_bill`, `id_hv`, `id_ql`, `id_class`, `total`, `paid`) VALUES
+('BILL_01', '2023-11-02', '1000', 'QL_01', 'LOP_01', 2000000, 0),
+('BILL_02', '2023-11-03', '1002', 'QL_02', 'LOP_04', 3000000, 0),
+('BILL_03', '2023-11-04', '1002', 'QL_02', 'LOP_03', 3000000, 0);
 
 -- --------------------------------------------------------
 
@@ -81,11 +84,11 @@ INSERT INTO `bill` (`id_bill`, `date_bill`, `id_hv`, `id_ql`, `id_class`, `total
 --
 
 CREATE TABLE `class` (
-  `id_class` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_gv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `level` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_course` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_class` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` text COLLATE utf8mb4_general_ci NOT NULL,
+  `id_gv` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `level` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_course` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `time_start` time NOT NULL,
   `time_end` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -108,7 +111,7 @@ INSERT INTO `class` (`id_class`, `name`, `id_gv`, `level`, `id_course`, `time_st
 --
 
 CREATE TABLE `class_days` (
-  `id_class` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_class` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `date_start` date NOT NULL,
   `date_end` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -132,8 +135,8 @@ INSERT INTO `class_days` (`id_class`, `date_start`, `date_end`) VALUES
 
 CREATE TABLE `class_students` (
   `stt` int NOT NULL,
-  `id_class` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `id_hv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `id_class` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `id_hv` varchar(10) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -155,11 +158,21 @@ INSERT INTO `class_students` (`stt`, `id_class`, `id_hv`) VALUES
 
 CREATE TABLE `comments` (
   `id` bigint NOT NULL,
-  `student_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_hv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `id_gv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `role` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `comments`
+--
+
+INSERT INTO `comments` (`id`, `id_hv`, `id_gv`, `role`, `content`, `created_at`, `updated_at`) VALUES
+(2, '1000', NULL, 'HV', 'adsadasdasda', '2023-11-21 10:25:14', '2023-11-21 10:25:14'),
+(3, '1000', NULL, 'HV', 'đasadasdasdas', '2023-11-22 02:47:26', '2023-11-22 02:47:26');
 
 -- --------------------------------------------------------
 
@@ -168,8 +181,8 @@ CREATE TABLE `comments` (
 --
 
 CREATE TABLE `course` (
-  `id_course` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `id_course` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` text COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -190,14 +203,14 @@ INSERT INTO `course` (`id_course`, `name`) VALUES
 --
 
 CREATE TABLE `lecturer` (
-  `id_gv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_gv` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` text COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` text COLLATE utf8mb4_general_ci NOT NULL,
   `date _of_birth` date NOT NULL,
-  `phone` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `level` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `phone` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` text COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `level` varchar(10) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -218,11 +231,11 @@ INSERT INTO `lecturer` (`id_gv`, `name`, `gender`, `date _of_birth`, `phone`, `a
 --
 
 CREATE TABLE `manager` (
-  `id_ql` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `phone` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `id_ql` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` text COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` text COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -236,6 +249,29 @@ INSERT INTO `manager` (`id_ql`, `name`, `gender`, `phone`, `email`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Cấu trúc bảng cho bảng `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` bigint NOT NULL,
+  `id_bill` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `payments`
+--
+
+INSERT INTO `payments` (`id`, `id_bill`, `content`, `created_at`, `updated_at`) VALUES
+(1, 'BILL_01', 'dadsadas', '2023-11-22 04:17:33', '2023-11-22 04:17:33'),
+(2, 'BILL_02', 'dadsadas', '2023-11-22 04:18:20', '2023-11-22 04:18:20'),
+(3, 'BILL_01', 'dasdas', '2023-11-22 04:21:37', '2023-11-22 04:21:37');
+
+-- --------------------------------------------------------
+
+--
 -- Cấu trúc bảng cho bảng `reply`
 --
 
@@ -243,11 +279,18 @@ CREATE TABLE `reply` (
   `id` int NOT NULL,
   `comment_id` bigint NOT NULL,
   `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `manager_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `account_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_ql` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `reply`
+--
+
+INSERT INTO `reply` (`id`, `comment_id`, `content`, `id_ql`, `created_at`, `updated_at`) VALUES
+(4, 3, 'Phản hồi 1', 'QL_01', '2023-11-22 06:04:59', '2023-11-22 06:04:59'),
+(5, 3, 'phản hồi 2', NULL, '2023-11-22 06:06:15', '2023-11-22 06:06:15');
 
 -- --------------------------------------------------------
 
@@ -256,14 +299,14 @@ CREATE TABLE `reply` (
 --
 
 CREATE TABLE `student` (
-  `id_hv` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `gender` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `id_hv` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `name` text COLLATE utf8mb4_general_ci NOT NULL,
+  `gender` text COLLATE utf8mb4_general_ci NOT NULL,
   `date _of_birth` date NOT NULL,
-  `phone` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `address` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `level` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
+  `phone` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
+  `address` text COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `level` varchar(10) COLLATE utf8mb4_general_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -284,7 +327,7 @@ INSERT INTO `student` (`id_hv`, `name`, `gender`, `date _of_birth`, `phone`, `ad
 --
 
 CREATE TABLE `teacher_level` (
-  `level` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `level` varchar(10) COLLATE utf8mb4_general_ci NOT NULL,
   `price_level` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -340,7 +383,8 @@ ALTER TABLE `class_students`
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `fk_foreign_student_id` (`student_id`);
+  ADD KEY `fk_foreign_id_hv` (`id_hv`),
+  ADD KEY `fk_foreign_id_gv` (`id_gv`);
 
 --
 -- Chỉ mục cho bảng `course`
@@ -362,13 +406,19 @@ ALTER TABLE `manager`
   ADD PRIMARY KEY (`id_ql`);
 
 --
+-- Chỉ mục cho bảng `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_payment_bill` (`id_bill`) USING BTREE;
+
+--
 -- Chỉ mục cho bảng `reply`
 --
 ALTER TABLE `reply`
   ADD PRIMARY KEY (`id`),
   ADD KEY `fk_foreign_comment_id` (`comment_id`),
-  ADD KEY `fk_foreign_manager_id` (`manager_id`),
-  ADD KEY `fk_foreign_account_id` (`account_id`);
+  ADD KEY `fk_foreign_manager_id` (`id_ql`);
 
 --
 -- Chỉ mục cho bảng `student`
@@ -396,13 +446,19 @@ ALTER TABLE `class_students`
 -- AUTO_INCREMENT cho bảng `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT cho bảng `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT cho bảng `reply`
 --
 ALTER TABLE `reply`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Các ràng buộc cho các bảng đã đổ
@@ -433,7 +489,8 @@ ALTER TABLE `class_students`
 -- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `fk_foreign_student_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`id_hv`);
+  ADD CONSTRAINT `fk_foreign_id_gv` FOREIGN KEY (`id_gv`) REFERENCES `lecturer` (`id_gv`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `fk_foreign_id_hv` FOREIGN KEY (`id_hv`) REFERENCES `student` (`id_hv`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Các ràng buộc cho bảng `lecturer`
@@ -442,12 +499,17 @@ ALTER TABLE `lecturer`
   ADD CONSTRAINT `fk_lecturer_teacher_level` FOREIGN KEY (`level`) REFERENCES `teacher_level` (`level`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Các ràng buộc cho bảng `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `fk_pyament_bill` FOREIGN KEY (`id_bill`) REFERENCES `bill` (`id_bill`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Các ràng buộc cho bảng `reply`
 --
 ALTER TABLE `reply`
-  ADD CONSTRAINT `fk_foreign_account_id` FOREIGN KEY (`account_id`) REFERENCES `account` (`username`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_foreign_comment_id` FOREIGN KEY (`comment_id`) REFERENCES `comments` (`id`),
-  ADD CONSTRAINT `fk_foreign_manager_id` FOREIGN KEY (`manager_id`) REFERENCES `manager` (`id_ql`);
+  ADD CONSTRAINT `fk_foreign_manager_id` FOREIGN KEY (`id_ql`) REFERENCES `manager` (`id_ql`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

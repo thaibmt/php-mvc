@@ -18,31 +18,50 @@ class BillModel extends Database
     public function getBillDetails($billId)
     {
         $sql = "SELECT * FROM bill WHERE id_bill = ?";
+
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([$billId]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function getBillsPerPage($page, $pageSize)
+    public function getBillsPerPage($page, $pageSize, $userId = null)
     {
         $offset = ($page - 1) * $pageSize;
-        $sql = "SELECT bill.*, class.name as class_name, manager.name as manager_name, student.name as student_name, course.name as course_name FROM bill
-        INNER JOIN class ON bill.id_class = class.id_class 
-        INNER JOIN manager On bill.id_ql = manager.id_ql
-        INNER JOIN student On bill.id_hv = student.id_hv
-        INNER JOIN course On class.id_course = course.id_course
-        LIMIT :offset, :pageSize";
+        if ($userId) {
+            $sql = "SELECT bill.*, class.name as class_name, manager.name as manager_name, student.name as student_name, course.name as course_name FROM bill
+            INNER JOIN class ON bill.id_class = class.id_class 
+            INNER JOIN manager On bill.id_ql = manager.id_ql
+            INNER JOIN student On bill.id_hv = student.id_hv
+            INNER JOIN course On class.id_course = course.id_course
+            WHERE bill.id_hv = :userID 
+            LIMIT :offset, :pageSize";
+        } else {
+            $sql = "SELECT bill.*, class.name as class_name, manager.name as manager_name, student.name as student_name, course.name as course_name FROM bill
+            INNER JOIN class ON bill.id_class = class.id_class 
+            INNER JOIN manager On bill.id_ql = manager.id_ql
+            INNER JOIN student On bill.id_hv = student.id_hv
+            INNER JOIN course On class.id_course = course.id_course
+            LIMIT :offset, :pageSize";
+        }
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
         $stmt->bindParam(':pageSize', $pageSize, PDO::PARAM_INT);
+        if ($userId) {
+            $stmt->bindParam(':userID', $userId, PDO::PARAM_STR);
+        }
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function getTotalBillCount()
+    public function getTotalBillCount($userId = null)
     {
-        $sql = "SELECT COUNT(*) as count FROM bill";
+        if ($userId) {
+            $sql = "SELECT COUNT(*) as count FROM bill where id_hv = $userId";
+        } else {
+            $sql = "SELECT COUNT(*) as count FROM bill";
+        }
+
         $stmt = $this->pdo->query($sql);
 
         return $stmt->fetch(PDO::FETCH_ASSOC)['count'];

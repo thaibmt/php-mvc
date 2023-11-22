@@ -1,6 +1,6 @@
 <?php
 // Kiểm tra xem người dùng đã đăng nhập hay chưa
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: index.php?action=login");
     exit();
 }

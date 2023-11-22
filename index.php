@@ -12,6 +12,7 @@ include('models/ClassModel.php');
 include('models/CourseModel.php');
 include('models/StudentModel.php');
 include('models/ReplyModel.php');
+include('models/PaymentModel.php');
 include('controllers/AdminController.php');
 include('controllers/BillController.php');
 include('controllers/CommentController.php');
@@ -24,9 +25,10 @@ $classModel = new ClassModel();
 $courseModel = new CourseModel();
 $studentModel = new StudentModel();
 $replyModel = new ReplyModel();
+$paymentModel = new PaymentModel();
 $adminController = new AdminController($accountModel);
-$billController = new BillController($billModel, $managerModel, $classModel, $courseModel, $studentModel);
-$commentController = new CommentController($commentModel);
+$billController = new BillController($billModel, $managerModel, $classModel, $courseModel, $studentModel, $paymentModel);
+$commentController = new CommentController($commentModel, $replyModel);
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'index';
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -54,8 +56,20 @@ switch ($action) {
     case 'createComment':
         $commentController->create();
         break;
+    case 'readComment':
+        $commentController->read($id);
+        break;
     case 'deleteComment':
         $commentController->delete($id);
+        break;
+    case 'listPayment':
+        $billController->payment();
+        break;
+    case 'createPayment':
+        $billController->createPayment($id);
+        break;
+    case 'deleteReply':
+        $commentController->deleteReply($id);
         break;
     default:
         $adminController->index();

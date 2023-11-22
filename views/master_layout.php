@@ -33,18 +33,36 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
+                <?php if ($_SESSION['role'] == 'QL') { ?>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="QL Đơn hàng">
+                    <a class="nav-link" href="index.php?action=listBill">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">QL Đơn hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="QL Phản hồi">
+                    <a class="nav-link" href="index.php?action=listComment">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">QL Phản hồi</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if (in_array($_SESSION['role'], ['GV', 'HV'])) { ?>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Đánh giá">
+                    <a class="nav-link" href="index.php?action=listComment">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Đánh giá</span>
+                    </a>
+                </li>
+                <?php } ?>
+                <?php if (in_array($_SESSION['role'], ['HV'])) { ?>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Đơn hàng">
                     <a class="nav-link" href="index.php?action=listBill">
                         <i class="fa fa-fw fa-dashboard"></i>
                         <span class="nav-link-text">Đơn hàng</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Phản hồi">
-                    <a class="nav-link" href="index.php?action=listComment">
-                        <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Phản hồi</span>
-                    </a>
-                </li>
+                <?php } ?>
                 <!-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Components">
                     <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents"
                         data-parent="#exampleAccordion">
@@ -181,7 +199,7 @@
                 <li class="breadcrumb-item">
                     <a href="index.php">Dashboard</a>
                 </li>
-                <?php if ($_GET['action']) { ?>
+                <?php if (isset($_GET['action'])) { ?>
                 <li class="breadcrumb-item active"><?php echo $title ?></li>
                 <?php } ?>
             </ol>

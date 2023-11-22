@@ -26,7 +26,8 @@ class AdminController
             // Kiểm tra kết quả đăng nhập
             if ($user) {
                 // Lưu thông tin người dùng vào session
-                $_SESSION['user_id'] = true;
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['role'] = $user['role'];
                 $_SESSION['username'] = $user['username'];
 
                 // Chuyển hướng đến trang chính hoặc trang sau khi đăng nhập thành công

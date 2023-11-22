@@ -1,13 +1,22 @@
 <?php
 // Kiểm tra xem người dùng đã đăng nhập hay chưa
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: index.php?action=login");
+    exit();
+}
+// Yêu cầu vai trò quản lý
+if ($_SESSION['role'] != 'QL') {
+    echo 'Chỉ quản lý mới được sử dụng chức năng này!';
     exit();
 }
 
 $title = "Cập nhật đơn hàng";
 ob_start();
 ?>
+<?php if (isset($_SESSION['message'])) { ?>
+<h2 class="text-success"><?php echo $_SESSION['message'] ?></h2>
+<?php unset($_SESSION['message']);
+} ?>
 <form method="post" action="index.php?action=updateBill&id=<?php echo $id ?>" class="form">
     <div class="form-group">
         <label for="">Học viên:</label>
@@ -43,6 +52,13 @@ ob_start();
     <div class="form-group">
         <label for="">Tổng tiền:</label>
         <input type="number" min="0" name="total" value="<?php echo $bill['total'] ?>" class="form-control">
+    </div>
+    <div class="form-group">
+        <label for="">Trạng thái:</label>
+        <select name="paid" class="form-select select" required>
+            <option <?php echo $bill['paid'] == 0 ? 'selected' : '' ?> value="0">Chưa thanh toán</option>
+            <option <?php echo $bill['paid'] == 1 ? 'selected' : '' ?> value="1">Đã thanh toán</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-success">Lưu</button>
 </form>
