@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Đăng nhập</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css">
 </head>
 
@@ -15,17 +15,17 @@
         height: 100vh;
         align-content: center;">
             <div class="col-lg-4">
-                <h2>Login</h2>
+                <h2>Đăng nhập</h2>
                 <form method="post" action="index.php?action=login" class="form">
                     <div class="form-group">
-                        <label for="username">Username:</label>
-                        <input type="text" name="username" class="form-control" required>
+                        <label for="username">Tên đăng nhập:</label>
+                        <input type="text" name="username" placeholder="Username" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="password">Password:</label>
-                        <input type="password" name="password" class="form-control" required>
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" placeholder="Password" name="password" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-success">Login</button>
+                    <button type="submit" class="btn btn-success">Đăng nhập</button>
                 </form>
             </div>
         </div>

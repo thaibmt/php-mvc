@@ -20,7 +20,7 @@ ob_start();
         <th>Tên</th>
         <th>Vai trò</th>
         <th>Nội dung</th>
-        <th>Action</th>
+        <th class="text-center">Chức năng</th>
     </tr>
     <?php foreach ($comments as $index => $comment) : ?>
     <tr>
@@ -29,7 +29,7 @@ ob_start();
         <td><?php echo isset($comment['studentName']) ? $comment['studentName'] : $comment['lecturerName']; ?></td>
         <td><?php echo isset($comment['id_gv']) ? 'Giảng viên' : 'Sinh viên'; ?></td>
         <td><?php echo $comment['content']; ?></td>
-        <td>
+        <td class="text-center">
             <a href="index.php?action=readComment&id=<?php echo $comment['id']; ?>" class="btn btn-primary">Chi
                 tiết</a>
             <a href="index.php?action=deleteComment&id=<?php echo $comment['id']; ?>" class="btn btn-danger">Xóa</a>

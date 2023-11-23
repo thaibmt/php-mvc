@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: mysql
--- Thời gian đã tạo: Th10 22, 2023 lúc 09:19 AM
+-- Thời gian đã tạo: Th10 23, 2023 lúc 06:43 AM
 -- Phiên bản máy phục vụ: 8.0.33
 -- Phiên bản PHP: 8.1.18
 
@@ -73,8 +73,6 @@ CREATE TABLE `bill` (
 --
 
 INSERT INTO `bill` (`id_bill`, `date_bill`, `id_hv`, `id_ql`, `id_class`, `total`, `paid`) VALUES
-('BILL_01', '2023-11-02', '1000', 'QL_01', 'LOP_01', 2000000, 0),
-('BILL_02', '2023-11-03', '1002', 'QL_02', 'LOP_04', 3000000, 0),
 ('BILL_03', '2023-11-04', '1002', 'QL_02', 'LOP_03', 3000000, 0);
 
 -- --------------------------------------------------------
@@ -171,7 +169,6 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`id`, `id_hv`, `id_gv`, `role`, `content`, `created_at`, `updated_at`) VALUES
-(2, '1000', NULL, 'HV', 'adsadasdasda', '2023-11-21 10:25:14', '2023-11-21 10:25:14'),
 (3, '1000', NULL, 'HV', 'đasadasdasdas', '2023-11-22 02:47:26', '2023-11-22 02:47:26');
 
 -- --------------------------------------------------------
@@ -259,15 +256,6 @@ CREATE TABLE `payments` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `payments`
---
-
-INSERT INTO `payments` (`id`, `id_bill`, `content`, `created_at`, `updated_at`) VALUES
-(1, 'BILL_01', 'dadsadas', '2023-11-22 04:17:33', '2023-11-22 04:17:33'),
-(2, 'BILL_02', 'dadsadas', '2023-11-22 04:18:20', '2023-11-22 04:18:20'),
-(3, 'BILL_01', 'dasdas', '2023-11-22 04:21:37', '2023-11-22 04:21:37');
 
 -- --------------------------------------------------------
 
@@ -452,13 +440,13 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT cho bảng `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT cho bảng `reply`
 --
 ALTER TABLE `reply`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Các ràng buộc cho các bảng đã đổ

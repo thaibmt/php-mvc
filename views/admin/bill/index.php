@@ -38,7 +38,7 @@ $billStatus = [
         <th>Tổng tiền</th>
         <th>Ngày đăng ký</th>
         <th>Tình trạng</th>
-        <th class="text-center">Action</th>
+        <th class="text-center">Chức năng</th>
     </tr>
     <?php foreach ($bills as $index => $bill) : ?>
     <tr>

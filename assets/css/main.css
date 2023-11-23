@@ -525,3 +525,17 @@ footer.sticky-footer {
     -moz-appearance: none;
     appearance: none;
 }
+
+.bg-dark {
+    background-color: #93c0c6 !important;
+}
+
+.navbar-sidenav {
+    background: #dadada !important;
+}
+
+.navbar-brand,
+.navbar-sidenav .nav-link>*,
+.nav-link {
+    color: #000 !important;
+}
