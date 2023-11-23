@@ -65,9 +65,6 @@ switch ($action) {
     case 'deleteComment':
         $commentController->delete($id);
         break;
-    case 'listPayment':
-        $billController->payment();
-        break;
     case 'createPayment':
         $billController->createPayment($id);
         break;

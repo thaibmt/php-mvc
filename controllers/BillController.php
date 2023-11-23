@@ -93,20 +93,6 @@ class BillController
         }
     }
 
-    public function payment()
-    {
-        try {
-            $user_id = $_SESSION['user_id'];
-            $role = $_SESSION['role'];
-            $payments = $this->paymentModel->getPaymentByUserIdAndRole($user_id, $role);
-
-            // Load view với dữ liệu hóa đơn và thông tin phân trang
-            include('views/payment/index.php');
-        } catch (PDOException $e) {
-            die($e);
-        }
-    }
-
     public function createPayment($id)
     {
         $role = $_SESSION['role'];
