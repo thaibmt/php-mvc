@@ -71,6 +71,29 @@ class BillModel extends Database
         return $stmt->fetch(PDO::FETCH_ASSOC)['count'];
     }
 
+    public function create($data)
+    {
+        try {
+            $sql = "INSERT INTO bill  (id_bill, id_hv, id_ql, id_class, date_bill, total, paid) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            $stmt = $this->pdo->prepare($sql);
+            return $stmt->execute(array_values($data));
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function exists($id)
+    {
+        try {
+            $sql = "SELECT* from bill where id_bill = ?";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute([$id]);
+            return $stmt->rowCount() > 0;
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
     public function update($data)
     {
         try {

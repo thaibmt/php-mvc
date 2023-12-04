@@ -28,6 +28,7 @@ $billStatus = [
 <?php unset($_SESSION['message']);
 } ?>
 <!-- Hiển thị danh sách hóa đơn và các liên kết điều hướng -->
+<a href="index.php?action=createBill" class="btn btn-success mb-2">Tạo bill</a>
 <table border="1" class="table">
     <tr>
         <th>ID</th>

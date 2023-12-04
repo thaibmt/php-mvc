@@ -44,6 +44,9 @@ switch ($action) {
     case 'listBill':
         $billController->index($page);
         break;
+    case 'createBill':
+        $billController->create();
+        break;
     case 'updateBill':
         $billController->update($id);
         break;

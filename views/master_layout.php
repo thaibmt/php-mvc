@@ -34,16 +34,28 @@
                     </a>
                 </li>
                 <?php if ($_SESSION['role'] == 'QL') { ?>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="QL Đơn hàng">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Thanh toán">
                     <a class="nav-link" href="index.php?action=listBill">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Quản lý Đơn hàng</span>
+                        <span class="nav-link-text">Thanh toán</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="QL Phản hồi">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="QL Hóa đơn">
+                    <a class="nav-link" href="index.php?action=listBill">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Quản lý Hóa đơn</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Đánh giá và Phản hồi">
                     <a class="nav-link" href="index.php?action=listComment">
                         <i class="fa fa-fw fa-dashboard"></i>
-                        <span class="nav-link-text">Quản lý Phản hồi</span>
+                        <span class="nav-link-text">Đánh giá và Phản hồi</span>
+                    </a>
+                </li>
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="QL Đánh giá">
+                    <a class="nav-link" href="index.php?action=listComment">
+                        <i class="fa fa-fw fa-dashboard"></i>
+                        <span class="nav-link-text">Quản lý Đánh giá</span>
                     </a>
                 </li>
                 <?php } ?>

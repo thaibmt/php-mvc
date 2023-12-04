@@ -44,7 +44,43 @@ class BillController
             header('Location: ' . $_SERVER['HTTP_REFERER']);
         }
     }
-
+    public function create()
+    {
+        try {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                $managers = $this->managerModel->all();
+                $classes = $this->classModel->all();
+                $courses = $this->courseModel->all();
+                $students = $this->studentModel->all();
+                return include('views/admin/bill/create.php');
+            }
+            if ($this->billModel->exists($_POST['id_bill'])) {
+                $_SESSION['message'] = 'ID Bill đã tồn tại';
+                // Trở về trang danh sách
+                return header('Location: index.php?action=createBill');
+            }
+            $now = date("Y-m-d H:i:s");
+            $status = (int)$_POST['paid'];
+            $data = [
+                'id_bill ' => $_POST['id_bill'],
+                'id_hv ' => $_POST['id_hv'],
+                'id_ql ' => $_POST['id_ql'],
+                'id_class' => $_POST['id_class'],
+                'date_bill' => $_POST['date_bill'],
+                'total' => $_POST['total'],
+                'paid' => in_array($status, [0, 1, 2]) ? $status : 0
+            ];
+            $result = $this->billModel->create($data);
+            $_SESSION['message'] = $result ? 'Thành công' : 'Có lỗi xảy ra';
+            // Trở về trang danh sách
+            header('Location: index.php?action=listBill');
+        } catch (Exception $e) {
+            return var_dump($e);
+            $_SESSION['message'] = 'Có lỗi xảy ra: ' . $e->getMessage();
+            // Trở về
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        }
+    }
     public function update($id)
     {
         try {
